@@ -22,6 +22,7 @@ $ python main.py
 # **Open Source Projects used:**
 
 **->** *https://github.com/devine-dl/pywidevine*
+
 **->** *https://github.com/psf/requests*
 
 
