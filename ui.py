@@ -61,7 +61,7 @@ class WidevineUI(QMainWindow):
         input_layout = QVBoxLayout(input_widget)
         input_layout.setSpacing(10)
         
-        input_layout.addWidget(self.create_label("WVD Device Path:"))
+        input_layout.addWidget(self.create_label("WVD File:"))
         wvd_layout = QHBoxLayout()
         self.wvd_input = self.create_input("")
         wvd_browse = self.create_button("Browse", self.browse_wvd, small=True)
@@ -69,7 +69,7 @@ class WidevineUI(QMainWindow):
         wvd_layout.addWidget(wvd_browse)
         input_layout.addLayout(wvd_layout)
         
-        input_layout.addWidget(self.create_label("PSSH (Base64):"))
+        input_layout.addWidget(self.create_label("PSSH:"))
         self.pssh_input = self.create_input("")
         input_layout.addWidget(self.pssh_input)
         
@@ -94,7 +94,7 @@ class WidevineUI(QMainWindow):
         self.fetch_input.setPlaceholderText('await fetch("https://example.com/license", {\n    "headers": {\n        "x-auth-token": "...",\n        "x-device-id": "...",\n        ...\n    },\n    "body": "...",\n    "method": "POST"\n});')
         input_layout.addWidget(self.fetch_input)
         
-        self.extract_btn = self.create_button("Extract L3 Keys", self.extract_keys)
+        self.extract_btn = self.create_button("Extract L3 Decryption Keys", self.extract_keys)
         self.extract_btn.setMinimumHeight(45)
         input_layout.addWidget(self.extract_btn)
         
@@ -235,7 +235,7 @@ class WidevineUI(QMainWindow):
     def browse_wvd(self):
         file_path, _ = QFileDialog.getOpenFileName(
             self,
-            "Select WVD Device File",
+            "Select WVD File",
             "",
             "WVD Files (*.wvd);;All Files (*.*)"
         )
@@ -252,7 +252,7 @@ class WidevineUI(QMainWindow):
         
     def extract_keys(self):
         if not self.wvd_input.text() or not self.pssh_input.text():
-            self.log_to_console("ERROR: WVD device and PSSH required")
+            self.log_to_console("ERROR: WVD file and PSSH required")
             return
         
         license_url, headers_dict = self.parse_fetch_request()
@@ -281,4 +281,4 @@ class WidevineUI(QMainWindow):
         
     def on_extraction_finished(self, keys, error):
         self.extract_btn.setEnabled(True)
-        self.extract_btn.setText("Extract L3 Keys")
+        self.extract_btn.setText("Extract L3 Decryption Keys")

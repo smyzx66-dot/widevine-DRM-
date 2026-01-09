@@ -1,0 +1,3 @@
+PyQt6==6.10.1
+pywidevine==1.8.0
+requests==2.32.5
